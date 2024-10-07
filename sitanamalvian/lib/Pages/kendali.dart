@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sitanamalvian/Pages/kendali.dart';
-import 'package:sitanamalvian/Pages/lingkungan.dart';
 
-class DashboardScreen extends StatelessWidget {
+class KendaliScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +14,7 @@ class DashboardScreen extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/headerdashboardref3.png'), // Pastikan path benar
+                    image: AssetImage('assets/images/headerkendali.png'), // Pastikan path benar
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -26,7 +24,7 @@ class DashboardScreen extends StatelessWidget {
           ),
           // Grid di atas gambar (posisi tumpang tindih)
           Positioned(
-            top: 0250, // Atur posisi agar tumpang tindih dengan gambar header
+            top: 120, // Atur posisi agar tumpang tindih dengan gambar header
             left: 0,
             right: 0,
             child: Padding(
@@ -38,33 +36,27 @@ class DashboardScreen extends StatelessWidget {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 children: [
-                  DashboardItem(
-                    imagePath: 'assets/images/iconcontrol.png',
-                    label: 'Kendali IOT',
-                    onTap: () {
-                      Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => KendaliScreen()),
-                            );
-                    },
-                  ),
-                  DashboardItem(
-                    imagePath: 'assets/images/iconlingkungan.png',
-                    label: 'Status Lingkungan',
-                    onTap: () {
-                      Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => LingkunganScreen()),
-                            );
-                    },
-                  ),
-                  DashboardItem(
-                    imagePath: 'assets/images/iconscript.png',
-                    label: 'Schedule',
-                    onTap: () {
-                      // Navigation to Schedule
-                    },
-                  ),
+                  // DashboardItem(
+                  //   imagePath: 'assets/images/iconcontrol.png',
+                  //   label: 'Kendali IOT',
+                  //   onTap: () {
+                  //     // Navigation to Remote Control
+                  //   },
+                  // ),
+                  // DashboardItem(
+                  //   imagePath: 'assets/images/iconlingkungan.png',
+                  //   label: 'Status Lingkungan',
+                  //   onTap: () {
+                  //     // Navigation to Environment Status
+                  //   },
+                  // ),
+                  // DashboardItem(
+                  //   imagePath: 'assets/images/iconscript.png',
+                  //   label: 'Schedule',
+                  //   onTap: () {
+                  //     // Navigation to Schedule
+                  //   },
+                  // ),
                   // DashboardItem(
                   //   imagePath: 'assets/images/history.png',
                   //   label: 'History',

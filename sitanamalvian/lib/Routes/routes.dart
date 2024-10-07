@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sitanamalvian/Pages/dashboard.dart';
 import 'package:sitanamalvian/Pages/splashscreen.dart';
 import 'package:sitanamalvian/Pages/dashboard.dart';
 import 'package:sitanamalvian/Pages/settings.dart';
@@ -11,7 +12,7 @@ class Routes {
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => SplashScreen(),
-    dashboard: (context) => DashboardPage(),
+    dashboard: (context) => DashboardScreen(),
     settings: (context) => SettingsPage(),
   };
 }

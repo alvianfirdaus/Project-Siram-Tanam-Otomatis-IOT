@@ -6,13 +6,14 @@
 // Define the I2C address of the LCD. It can be 0x27 or 0x3F. Adjust if necessary.
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-int SensorPin = 36; // deklarasi pin analog yg dipakai
-int soilMoistureValue; // menyimpan nilai analog dari sensor ke esp32
-int soilmoisturepercent; // nilai yg diperoleh dalam bentuk persen setelah dimaping
+int SensorPin = 36; // Pin analog untuk sensor kelembaban tanah
+int soilMoistureValue; // Menyimpan nilai analog dari sensor ke esp32
+int soilmoisturepercent; // Nilai yang diperoleh dalam bentuk persen setelah di-mapping
 
 #define RedLed  13 // PIN LED Merah
 #define YellowLed  12 // PIN LED Kuning
 #define GreenLed  14 // PIN LED Hijau
+#define RelayPin 27 // PIN Relay untuk mengontrol pompa
 
 // Wi-Fi credentials
 const char* ssid = "Alvian Production @ office"; // replace with your Wi-Fi SSID
@@ -27,19 +28,20 @@ FirebaseConfig firebaseConfig;
 FirebaseAuth auth;
 
 unsigned long lastFailedSend = 0; // Waktu terakhir gagal kirim data ke Firebase
-const unsigned long reconnectInterval = 120000; // Interval untuk mencoba reconnect (1 menit)
+const unsigned long reconnectInterval = 120000; // Interval untuk mencoba reconnect (2 menit)
 
 void setup() {
   Serial.begin(115200); // Baudrate komunikasi dengan serial monitor
   pinMode(RedLed, OUTPUT);
   pinMode(YellowLed, OUTPUT);
   pinMode(GreenLed, OUTPUT);
+  pinMode(RelayPin, OUTPUT); // Set pin relay sebagai output
 
   // Initialize the LCD
   lcd.init();
   lcd.backlight();
 
-  //Connect to Wi-Fi
+  // Connect to Wi-Fi
   WiFi.begin(ssid, password);
   Serial.print("Connecting to Wi-Fi");
   while (WiFi.status() != WL_CONNECTED) {
@@ -83,6 +85,7 @@ void loop() {
     digitalWrite(GreenLed, HIGH);
     digitalWrite(RedLed, LOW);
     digitalWrite(YellowLed, LOW);
+    digitalWrite(RelayPin, HIGH); // Matikan pompa
   } else if (soilmoisturepercent > 30 && soilmoisturepercent <= 60) {
     Serial.println("Tanah kondisi normal");
     lcd.setCursor(0, 1);
@@ -90,6 +93,7 @@ void loop() {
     digitalWrite(YellowLed, HIGH);
     digitalWrite(RedLed, LOW);
     digitalWrite(GreenLed, LOW);
+    digitalWrite(RelayPin, HIGH); // Matikan pompa
   } else if (soilmoisturepercent >= 0 && soilmoisturepercent <= 30) {
     Serial.println("Tanah Kering");
     lcd.setCursor(0, 1);
@@ -97,11 +101,12 @@ void loop() {
     digitalWrite(RedLed, HIGH);
     digitalWrite(YellowLed, LOW);
     digitalWrite(GreenLed, LOW);
+    digitalWrite(RelayPin, LOW); // Nyalakan pompa
   }
 
   // Upload to Firebase
-  String path = "/soilMoisture"; // Your desired path in Firebase
-  if (Firebase.setInt(firebaseData, path + "/value", soilmoisturepercent)) {
+  String path = "/plot1"; // Your desired path in Firebase
+  if (Firebase.setInt(firebaseData, path + "/soilMouisture", soilmoisturepercent)) {
     Serial.println("Data sent to Firebase successfully");
   } else {
     Serial.print("Failed to send data to Firebase: ");
@@ -127,23 +132,7 @@ void loop() {
 
       lastFailedSend = millis(); // Reset waktu gagal kirim setelah reconnect
     }
-
   }
+
   delay(3000);
-  
 }
-
-
-// int SensorPin = 4; // Pin analog untuk sensor kelembaban tanah
-// int soilMoistureValue; // Menyimpan nilai analog dari sensor
-
-// void setup() {
-//   Serial.begin(115200); // Memulai komunikasi serial dengan baud rate 115200
-// }
-
-// void loop() {
-//   soilMoistureValue = analogRead(SensorPin); // Membaca nilai analog dari sensor
-//   Serial.print("Nilai analog sensor kelembaban tanah: ");
-//   Serial.println(soilMoistureValue); // Mencetak nilai analog ke Serial Monitor
-//   delay(1000); // Menunggu 1 detik sebelum pembacaan berikutnya
-// }

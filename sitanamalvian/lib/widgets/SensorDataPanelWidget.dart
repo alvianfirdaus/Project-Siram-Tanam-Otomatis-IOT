@@ -64,11 +64,11 @@ class SensorDataPanelWidget extends StatelessWidget {
                     Divider(),
 
                     // pH data
-                    SensorDetailItem(
-                      icon: Icons.grass,
-                      title: 'pH',
-                      value: plotData['pH']?.toString() ?? 'N/A',
-                    ),
+                    // SensorDetailItem(
+                    //   icon: Icons.grass,
+                    //   title: 'pH',
+                    //   value: plotData['pH']?.toString() ?? 'N/A',
+                    // ),
 
                     // Temperature data
                     
@@ -78,6 +78,12 @@ class SensorDataPanelWidget extends StatelessWidget {
                       value: (plotData['temperature'] != null ? plotData['temperature'].toString() + " °C" : 'N/A'),
                     ),
 
+                    // Pump Status data
+                    SensorDetailItem(
+                      icon: plotData['mode'] == 1 ? Icons.hdr_auto : Icons.fiber_manual_record,
+                      title: 'Mode',
+                      value: plotData['mode'] == 1 ? 'OTOMATIS' : 'MANUAL',
+                    ),
 
                     // Pump Status data
                     SensorDetailItem(

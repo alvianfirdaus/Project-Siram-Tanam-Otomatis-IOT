@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sitanamalvian/Pages/kendali.dart';
 import 'package:sitanamalvian/Pages/lingkungan.dart';
+import 'package:sitanamalvian/Pages/catatan.dart';
+import 'package:sitanamalvian/Pages/deteksi.dart';
+import 'package:sitanamalvian/Pages/hitung_nutrisi.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
@@ -60,25 +63,35 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   DashboardItem(
                     imagePath: 'assets/images/iconscript.png',
-                    label: 'Schedule',
+                    label: 'Catatan',
                     onTap: () {
-                      // Navigation to Schedule
+                      Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => CatatanScreen()),
+                            );
                     },
                   ),
-                  // DashboardItem(
-                  //   imagePath: 'assets/images/history.png',
-                  //   label: 'History',
-                  //   onTap: () {
-                  //     // Navigation to History
-                  //   },
-                  // ),
-                  // DashboardItem(
-                  //   imagePath: 'assets/images/script.png',
-                  //   label: 'Script',
-                  //   onTap: () {
-                  //     // Navigation to Script
-                  //   },
-                  // ),
+                  DashboardItem(
+                    imagePath: 'assets/images/icondeteksi.png',
+                    label: 'Deteksi',
+                    onTap: () {
+                      Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => DeteksiScreen()),
+                            );
+                    },
+                  ),
+                  DashboardItem(
+                    imagePath: 'assets/images/script.png',
+                    label: 'Hitung Nutrisi',
+                    onTap: () {
+                      Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => HitungNutrisiScreen()),
+                            );
+                      // Navigation to Script HitungNutrisiScreen
+                    },
+                  ),
                   // DashboardItem(
                   //   imagePath: 'assets/images/technique.png',
                   //   label: 'Technique',
